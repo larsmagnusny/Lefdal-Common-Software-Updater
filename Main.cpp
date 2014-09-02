@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string>
 #include "Sockets.h"
+#include "HTML_PARSER.cpp"
 
 using namespace std;
 
@@ -10,9 +11,10 @@ int main(){
 
 	// char * ip = socket_def.nslookup("");
 
-	int socket = socket_def.sock_connect(socket_def.nslookup("www.hig.no"), 80);
+	int socket = socket_def.sock_connect(socket_def.nslookup("www.vg.no"), 80);
 
-	cout << socket_def.send_and_recieve(socket, "GET / HTTP/1.1\nHost: www.hig.no\r\n\r\n") << endl;
+
+	HTMLParser h(socket_def.send_and_recieve(socket, "GET / HTTP/1.1\nHost: www.vg.no\r\n\r\n"));
 
 	return 0;
 }

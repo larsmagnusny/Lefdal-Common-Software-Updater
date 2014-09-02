@@ -74,7 +74,7 @@ public:
 				ret += buf;
 			}
 
-			std::cout << content_length << std::endl;
+			std::cout << transfer_encoding << std::endl;
 
 			unsigned int bytesread = 0;
 
@@ -83,44 +83,46 @@ public:
 			if(transfer_encoding.compare("") == 0){      // Normal transfer
 
 			} else if(transfer_encoding.compare("chunked") == 0){
-					std::cout << "chunked" << std::endl; // Works most of the time?
-
-					while(ret.find("\r\n\r\n") == -1){
-					std::string hex;
-					buffer = new char[2];
-					do {
-						recv(sock, buffer, 1, 0);
-						buffer[1] = '\0';
-						hex += buffer;
-					} while(hex.find("\r\n") == -1);
-
-					hex = hex.substr(0, hex.length()-2);
-					std::cout << std::endl << hex << std::endl;
-					unsigned int read_size = hex_to_decimal(hex);
-
-					buffer = new char[read_size+1];
-
-					int bytes_read = 0;
-
-					while(bytes_read != read_size && bytes_read < read_size){
-						if((bytes = recv(sock, buffer, read_size-bytes_read, 0)) < 0){
-							read_size = bytes_read;
+				int bytes_read = 0;
+				int length = 0;
+				do
+				{
+					std::string hex = "";
+					char *byte = new char[2];
+					while(hex.find("\r\n") == -1){
+						if((bytes_read = recv(sock, byte, 1, 0)) < 0){
+							break;
+						} else {
+							hex += byte[0];
+							std::cout << byte[0];
 						}
-						bytes_read += bytes;
-						ret += buffer;
-
-						std::cout << buffer << std::endl;
-						std::cout << bytes_read << std::endl;
 					}
+					hex = hex.substr(0, hex.length()-2);
+					length = hex_to_decimal(hex);
 
-					std::cout << ret << std::endl;
-					std::cout << ret.length() << std::endl;
-					}
+					std::cout << "Length: " << length << std::endl << std::endl;
+
+					int total_bytes_read = 0;
+					byte = new char[length+1];
+					do {
+						if((bytes_read = recv(sock, byte, length-total_bytes_read, 0)) < 0){
+							break;
+						} else {
+
+							for(int i = 0; i < bytes_read; i++){
+								ret += byte[i];
+							}
+
+							total_bytes_read += bytes_read;
+							std::cout << length-total_bytes_read << std::endl;
+						}
+					} while(length > total_bytes_read);
+					recv(sock, byte, 2, 0);
+				} while(length != 0);
 			}
-			// Create a handle for the incoming data
 		}
 
-		return "";
+		return ret;
 	}
 
 	unsigned int hex_to_decimal(std::string hex){

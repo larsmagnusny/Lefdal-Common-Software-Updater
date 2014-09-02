@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include "HTTP_STATUS.h"
 
 class Header {
 private:
