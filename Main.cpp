@@ -16,5 +16,5 @@ int main(){
 
 	HTMLParser h(socket_def.send_and_recieve(socket, "GET / HTTP/1.1\nHost: www.vg.no\r\n\r\n"));
 
-	return 0;
+	return 1;
 }
