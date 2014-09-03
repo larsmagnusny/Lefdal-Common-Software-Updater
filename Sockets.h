@@ -62,17 +62,14 @@ public:
 			//Read Header then determine how to read the rest
 			std::string header = ret;
 
+			std::cout << header << std::endl;
+
 			Header h(header);
 
 			std::string transfer_encoding = h.GetValue("Transfer-Encoding");
 
 			unsigned int content_length = atoi(h.GetValue("Content-Length").c_str());
 			h.print_all();
-			if(content_length > 0){
-				char* buf = new char[content_length+1];
-				recv(sock, buf, content_length,0);
-				ret += buf;
-			}
 
 			std::cout << transfer_encoding << std::endl;
 
@@ -80,8 +77,23 @@ public:
 
 			ret = "";
 
-			if(transfer_encoding.compare("") == 0){      // Normal transfer
+			std::cout << content_length << std::endl;
 
+			if(content_length > 0){      // Normal transfer
+				int bytes_read = 0;
+				int total_bytes_read = 0;
+				char* buffer = new char[content_length+1];
+				while(content_length > total_bytes_read){
+					if((bytes_read = recv(sock, buffer, content_length-total_bytes_read, 0)) <= 0){
+						break;
+					} else {
+						for(int i = 0; i < bytes_read; i++){
+							ret += buffer[i];
+						}
+						total_bytes_read += bytes_read;
+						std::cout << total_bytes_read << "/" << content_length << std::endl;
+					}
+				}
 			} else if(transfer_encoding.compare("chunked") == 0){
 				int bytes_read = 0;
 				int length = 0;

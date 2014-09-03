@@ -4,14 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../Downloaded_File.cpp \
 ../HTML_PARSER.cpp \
 ../Main.cpp 
 
 OBJS += \
+./Downloaded_File.o \
 ./HTML_PARSER.o \
 ./Main.o 
 
 CPP_DEPS += \
+./Downloaded_File.d \
 ./HTML_PARSER.d \
 ./Main.d 
 
