@@ -2,8 +2,15 @@
 #include <stdio.h>
 #include <string>
 #include "Sockets.h"
+#ifndef HP
 #include "HTML_PARSER.cpp"
+#endif
+#ifndef DL_CLASS
 #include "Downloaded_File.cpp"
+#endif
+#ifndef LM
+#include "LinkMiner.cpp"
+#endif
 
 using namespace std;
 
@@ -12,11 +19,18 @@ int main(){
 
 	// char * ip = socket_def.nslookup("");
 
-	int socket = socket_def.sock_connect(socket_def.nslookup("download.macromedia.com"), 80);
+	int socket = socket_def.sock_connect(socket_def.nslookup("www.vg.no"), 80);
+	DOWNLOADED_FILE f = socket_def.send_and_recieve(socket, socket_def.GenerateGet("http://www.vg.no/"));
 
+	if(f.GetCompressed()){
+		cout << "The File is Compressed" << endl;
+		f.print_file();
+	}
 
-	DOWNLOADED_FILE f(socket_def.send_and_recieve(socket, "GET /get/flashplayer/current/support/uninstall_flash_player.exe HTTP/1.1\nHost: download.macromedia.com\r\n\r\n"));
-	f.print_file();
-
+	if(f.GetType().find("text/html") != -1){
+		HTMLParser html(f.GetUncompressedData());
+		LinkMiner lm(html);
+	}
+	f.save_file("/home/lars/javafile.tar.gz");
 	return 1;
 }

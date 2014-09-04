@@ -39,14 +39,11 @@ endif
 # All Target
 all: Common\ Software\ Downloader
 
-dependents:
-	-cd /home/lars/workspace/C++/Common\ Software\ Downloader/Release && $(MAKE) all
-
 # Tool invocations
-Common\ Software\ Downloader: $(OBJS) $(USER_OBJS) /home/lars/workspace/C++/Common\ Software\ Downloader/Release/Common\ Software\ Downloader
+Common\ Software\ Downloader: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	g++ -L/usr/local/lib -o "Common Software Downloader" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++  -o "Common Software Downloader" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -57,6 +54,5 @@ clean:
 
 .PHONY: all clean dependents
 .SECONDARY:
-/home/lars/workspace/C++/Common\ Software\ Downloader/Release/Common\ Software\ Downloader:
 
 -include ../makefile.targets

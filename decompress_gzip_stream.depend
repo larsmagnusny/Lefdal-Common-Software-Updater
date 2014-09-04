@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1305066767 source:d:\projects\cpp\decompress_gzip_stream\main.cpp
+	<cstdio>
+	<string>
+	<cstring>
+	<cstdlib>
+	"zlib.h"
+	"zconf.h"
+
+1271693568 d:\projects\cpp\decompress_gzip_stream\zlib\zlib.h
+	"zconf.h"
+
+1271570286 d:\projects\cpp\decompress_gzip_stream\zlib\zconf.h
+	<windows.h>
+	<sys/types.h>
+	<unistd.h>
+	<unixio.h>
+

@@ -7,19 +7,19 @@ class Header {
 private:
 	std::vector<std::string> property;
 	std::vector<std::string> value;
-	std::string status;
+	int status;
 public:
 	Header(std::string str){
-
+		std::string status_buf = "";
 		int index = str.find("\r\n");
 
-		status = str.substr(0, index);
+		status_buf = str.substr(0, index);
 
 		str = str.substr(index+2, str.length()-(index+2));
 
-		index = status.find(" ");
+		index = status_buf.find(" ");
 
-		status = status.substr(index+1, status.length()-1);
+		status = atoi(status_buf.substr(index+1, status_buf.length()-1).c_str());
 
 		while(index != -1 && (unsigned int)index < str.length()){
 			index = str.find("\r\n");
@@ -43,6 +43,10 @@ public:
 			}
 		}
 		return "";
+	}
+
+	int GetStatus(){
+		return status;
 	}
 
 	void print_all(){

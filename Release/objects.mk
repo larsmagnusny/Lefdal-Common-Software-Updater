@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lz
+LIBS := -l"/home/lars/workspace/C++/Common\ Software\ Downloader/zlib/libzdll.a"
 

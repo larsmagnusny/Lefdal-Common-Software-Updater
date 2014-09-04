@@ -1,4 +1,4 @@
-#define HTMLP
+#define HP
 
 #ifndef _SSTREAM_
 #include <sstream>

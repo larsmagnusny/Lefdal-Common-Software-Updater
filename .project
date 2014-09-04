@@ -3,6 +3,7 @@
 	<name>Common Software Downloader</name>
 	<comment></comment>
 	<projects>
+		<project>Common Software Downloader</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
