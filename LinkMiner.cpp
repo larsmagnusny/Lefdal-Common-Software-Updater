@@ -11,7 +11,7 @@ public:
 	LinkMiner(HTMLParser html){
 		links = html.getElementsByTag("A");
 
-		for(int i = 0; i < links.size(); ++i){
+		for(unsigned int i = 0; i < links.size(); ++i){
 			std::cout << links[i].getProperty("href") << std::endl;
 		}
 	}

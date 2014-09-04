@@ -14,10 +14,12 @@ private:
 public:
 	DOWNLOADED_FILE(){
 		type = "";
+		compressed = false;
 	}
 
 	DOWNLOADED_FILE(std::string str){
 		binary_data = str;
+		compressed = false;
 	}
 
 	void print_file(){

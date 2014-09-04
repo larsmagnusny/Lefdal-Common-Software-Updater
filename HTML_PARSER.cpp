@@ -21,7 +21,7 @@ private:
 	std::vector<std::string> property;
 	std::vector<std::string> value;
 
-	std::vector<std::string> split_string(std::string str, char* delim){
+	std::vector<std::string> split_string(std::string str, const char* delim){
 		std::vector<std::string> ret;
 		int current_index = 0;
 		int find = 0;
@@ -48,8 +48,6 @@ public:
 	}
 
 	Element(std::string html_element){
-		bool replaced = replace(html_element, "\r\n", " ");
-
 		int find1 = html_element.find('<');
 		int find2 = html_element.find('>', find1+1);
 
@@ -65,13 +63,13 @@ public:
 
 				std::vector<std::string> props = split_string(rest, "\" ");
 
-				for(int i = 0; i < props.size(); ++i){
+				for(unsigned int i = 0; i < props.size(); ++i){
 					props[i] = remove_space_untill_stop(props[i]);
 
 
 					std::vector<std::string> props2 = split_string(props[i], "=\"");
 
-					for(int i = 0; i < props2.size(); ++i){
+					for(unsigned int i = 0; i < props2.size(); ++i){
 						while(props2[i][props2[i].length()-1] == '"' || props2[i][props2[i].length()-1] == '/'){
 							props2[i] = props2[i].substr(0, props2[i].length()-1);
 						}
@@ -116,7 +114,6 @@ public:
 	}
 
 	std::string remove_space_untill_stop(std::string str){
-		int counter = 0;
 
 		while(str[0] == ' '){
 			str = str.substr(1, str.length()-1);
@@ -134,7 +131,7 @@ public:
 	}
 
 	std::string getProperty(std::string name){
-		for(int i = 0; i < property.size(); ++i){
+		for(unsigned int i = 0; i < property.size(); ++i){
 			if(property[i].compare(name) == 0){
 				return value[i];
 			}
@@ -152,7 +149,7 @@ public:
 	}
 
 	bool setProperty(std::string p, std::string v){
-		for(int i = 0; i < property.size(); ++i){
+		for(unsigned int i = 0; i < property.size(); ++i){
 			if(property[i].compare(p) == 0){
 				value[i] = v;
 				return true;
@@ -241,7 +238,7 @@ public:
 	}
 
 	Element getElementByName(std::string str){
-		for(int i = 0; i < Elements.size(); ++i){
+		for(unsigned int i = 0; i < Elements.size(); ++i){
 			std::string name = Elements[i].getProperty("name");
 			if(name.compare(str) == 0){
 				return Elements[i];
@@ -252,7 +249,7 @@ public:
 	}
 
 	Element getElementById(std::string str){
-		for(int i = 0; i < Elements.size(); ++i){
+		for(unsigned int i = 0; i < Elements.size(); ++i){
 			std::string id = Elements[i].getProperty("id");
 			if(id.compare(str) == 0){
 				return Elements[i];
@@ -264,7 +261,7 @@ public:
 
 	std::vector<Element> getElementsByProperty(std::string prop){
 		std::vector<Element> ret;
-		for(int i = 0; i < Elements.size(); ++i){
+		for(unsigned int i = 0; i < Elements.size(); ++i){
 			std::string proper = Elements[i].getProperty(prop);
 
 			if(proper.compare("") != 0){
@@ -278,7 +275,7 @@ public:
 	Element getElementsByPropertyValue(std::string str, std::string property){
 		std::vector<Element> elmatch = getElementsByProperty(property);
 
-		for(int a = 0; a < elmatch.size(); ++a){
+		for(unsigned int a = 0; a < elmatch.size(); ++a){
 			std::string value = elmatch[a].getProperty(property);
 
 			if(value.compare(str) == 0){
@@ -292,7 +289,7 @@ public:
 	std::vector<Element> getElementsByTag(std::string str){
 		std::vector<Element> buf;
 
-		for(int i = 0; i < Elements.size(); ++i){
+		for(unsigned int i = 0; i < Elements.size(); ++i){
 			std::string tag = Elements[i].getTag();
 			if(tag.compare(str) == 0){
 				buf.push_back(Elements[i]);

@@ -27,7 +27,7 @@ int main(){
 		f.print_file();
 	}
 
-	if(f.GetType().find("text/html") != -1){
+	if(f.GetType().find("text/html") != std::string::npos){
 		HTMLParser html(f.GetUncompressedData());
 		LinkMiner lm(html);
 	}

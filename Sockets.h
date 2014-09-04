@@ -89,7 +89,7 @@ public:
 		do{
 			bytes = recv(sock, buffer, 1, 0);
 			ret += buffer[0];
-		} while(ret.find("\r\n\r\n") == -1);
+		} while(ret.find("\r\n\r\n") == std::string::npos);
 
 		std::cout << "Got Answer" << std::endl;
 
@@ -103,13 +103,11 @@ public:
 
 			std::string transfer_encoding = h.GetValue("Transfer-Encoding");
 
-			unsigned int content_length = atoi(h.GetValue("Content-Length").c_str());
+			unsigned long content_length = atoi(h.GetValue("Content-Length").c_str());
 			h.print_all();
 			f.SetType(h.GetValue("Content-Type"));
 
 			std::cout << transfer_encoding << std::endl;
-
-			unsigned int bytesread = 0;
 
 			ret = "";
 
@@ -121,7 +119,7 @@ public:
 
 			if(content_length > 0 && h.GetStatus() == 200){      // Normal transfer
 				int bytes_read = 0;
-				int total_bytes_read = 0;
+				unsigned long total_bytes_read = 0;
 				char* buffer = new char[content_length+1];
 				while(content_length > total_bytes_read){
 					if((bytes_read = recv(sock, buffer, content_length-total_bytes_read, 0)) <= 0){
@@ -141,7 +139,7 @@ public:
 				{
 					std::string hex = "";
 					char *byte = new char[2];
-					while(hex.find("\r\n") == -1){
+					while(hex.find("\r\n") == std::string::npos){
 						if((bytes_read = recv(sock, byte, 1, 0)) < 0){
 							break;
 						} else {
