@@ -1,36 +1,32 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
-#include "Sockets.h"
+#include <Poco/Net/DNS.h>
 #ifndef HP
 #include "HTML_PARSER.cpp"
 #endif
-#ifndef DL_CLASS
-#include "Downloaded_File.cpp"
-#endif
-#ifndef LM
-#include "LinkMiner.cpp"
-#endif
 
 using namespace std;
+using Poco::Net::DNS;
+using Poco::Net::HostEntry;
 
 int main(){
-	Sockets socket_def;
+	const HostEntry& entry = DNS::hostByName("www.appinf.com");
+	cout << "Canonical Name: " << entry.name() << endl;
 
-	// char * ip = socket_def.nslookup("");
+	const HostEntry::AliasList& aliases = entry.aliases();
+	HostEntry::AliasList::const_iterator it = aliases.begin();
 
-	int socket = socket_def.sock_connect(socket_def.nslookup("www.vg.no"), 80);
-	DOWNLOADED_FILE f = socket_def.send_and_recieve(socket, socket_def.GenerateGet("http://www.vg.no/"));
-
-	if(f.GetCompressed()){
-		cout << "The File is Compressed" << endl;
-		f.print_file();
+	for(; it != aliases.end(); ++it){
+		cout << "Alias: " << *it << endl;
 	}
 
-	if(f.GetType().find("text/html") != std::string::npos){
-		HTMLParser html(f.GetUncompressedData());
-		LinkMiner lm(html);
+	const HostEntry::AddressList& addrs = entry.addresses();
+	HostEntry::AddressList::const_iterator its = addrs.begin();
+
+	for(; its != addrs.end(); ++its){
+		cout << "Address: " << its->toString() << endl;
 	}
-	f.save_file("/home/lars/javafile.tar.gz");
-	return 1;
+
+	return 0;
 }

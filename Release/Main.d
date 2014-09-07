@@ -1,17 +1,3 @@
-Main.d: ../Main.cpp ../Sockets.h ../HTTP.h ../HTTP_STATUS.h \
- ../Downloaded_File.cpp ../ZipOperations.cpp ../HTML_PARSER.cpp \
- ../LinkMiner.cpp
-
-../Sockets.h:
-
-../HTTP.h:
-
-../HTTP_STATUS.h:
-
-../Downloaded_File.cpp:
-
-../ZipOperations.cpp:
+Main.d: ../Main.cpp ../HTML_PARSER.cpp
 
 ../HTML_PARSER.cpp:
-
-../LinkMiner.cpp:

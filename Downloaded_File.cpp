@@ -3,7 +3,6 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include "ZipOperations.cpp"
 
 class DOWNLOADED_FILE {
 private:
@@ -24,6 +23,7 @@ public:
 
 	void print_file(){
 		std::cout << uncompressed << std::endl;
+		std::cout << binary_data << std::endl;
 	}
 
 	void save_file(std::string loc){
@@ -44,17 +44,6 @@ public:
 
 	std::string GetUncompressedData(){
 		return uncompressed;
-	}
-
-	void SetBinaryData(std::string s){
-		binary_data = s;
-
-		ZipOperations z;
-		if(z.gzipInflate(binary_data, uncompressed)){
-			compressed = false;
-		} else {
-			std::cout << "Could not inflate data" << std::endl;
-		}
 	}
 
 	void SetUncompressed(std::string s){

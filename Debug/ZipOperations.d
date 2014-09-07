@@ -1,1 +1,0 @@
-ZipOperations.d: ../ZipOperations.cpp

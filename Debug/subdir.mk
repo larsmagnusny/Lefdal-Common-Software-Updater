@@ -7,29 +7,26 @@ CPP_SRCS += \
 ../Downloaded_File.cpp \
 ../HTML_PARSER.cpp \
 ../LinkMiner.cpp \
-../Main.cpp \
-../ZipOperations.cpp 
+../Main.cpp 
 
 OBJS += \
 ./Downloaded_File.o \
 ./HTML_PARSER.o \
 ./LinkMiner.o \
-./Main.o \
-./ZipOperations.o 
+./Main.o 
 
 CPP_DEPS += \
 ./Downloaded_File.d \
 ./HTML_PARSER.d \
 ./LinkMiner.d \
-./Main.d \
-./ZipOperations.d 
+./Main.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
 %.o: ../%.cpp
 	@echo 'Building file: $<'
-	@echo 'Invoking: Cross G++ Compiler'
-	g++ -O0 -g3 -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	@echo 'Invoking: GCC C++ Compiler'
+	g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

@@ -45,14 +45,14 @@ dependents:
 # Tool invocations
 Common\ Software\ Downloader: $(OBJS) $(USER_OBJS) /home/lars/workspace/C++/Common\ Software\ Downloader/Release/Common\ Software\ Downloader
 	@echo 'Building target: $@'
-	@echo 'Invoking: Cross G++ Linker'
+	@echo 'Invoking: GCC C++ Linker'
 	g++ -L/usr/local/lib -o "Common Software Downloader" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) "Common Software Downloader"
+	-$(RM) $(OBJS)$(C++_DEPS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) "Common Software Downloader"
 	-@echo ' '
 
 .PHONY: all clean dependents

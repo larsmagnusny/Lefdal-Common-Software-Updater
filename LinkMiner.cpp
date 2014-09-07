@@ -10,11 +10,18 @@ private:
 public:
 	LinkMiner(HTMLParser html){
 		links = html.getElementsByTag("A");
-
-		for(unsigned int i = 0; i < links.size(); ++i){
-			std::cout << links[i].getProperty("href") << std::endl;
-		}
 	}
 
+	std::string GetLinkByClass(std::string s){
+		for(unsigned int i = 0; i < links.size(); ++i){
+			std::string PropertyValue = links[i].getProperty("class");
+
+			if(PropertyValue.compare(s) == 0){
+				return links[i].getProperty("href");
+			}
+		}
+
+		return "";
+	}
 
 };

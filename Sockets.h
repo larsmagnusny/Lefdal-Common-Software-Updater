@@ -16,6 +16,8 @@
 
 class Sockets {
 private:
+	Header h;
+	std::string Referer;
 public:
 	int sock_connect(std::string server_ip, int port){
 		int sock;
@@ -46,12 +48,20 @@ public:
 		std::string ret = "GET " + GetPathFromLocation(location) + " HTTP/1.1\r\n";
 					ret += "Host: " + GetHostFromLocation(location) + "\r\n";
 					ret += "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:32.0) Gecko/20100101 Firefox/32.0\r\n";
+					if(location.compare("http://sourceforge.net/projects/openofficeorg.mirror/?source=typ_redirect") == 0){
+						ret += GenerateReturnCookie() + "\r\n";
+					}
 					ret += "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n";
 					ret += "Accept-Language: en-US,en;q=0.5\r\n";
 					ret += "Accept-Encoding: gzip, deflate\r\n";
+					ret += "Referer: http://sourceforge.net/projects/openofficeorg.mirror/files/latest/download?source=typ_redirect";
 					ret += "Connection: keep-alive\r\n\r\n";
 
 		return ret;
+	}
+
+	std::string GenerateReturnCookie(){
+		return h.GetCookies();
 	}
 
 	std::string GetHostFromLocation(std::string str){
@@ -99,7 +109,7 @@ public:
 
 			std::cout << header << std::endl;
 
-			Header h(header);
+			h.new_h(header);
 
 			std::string transfer_encoding = h.GetValue("Transfer-Encoding");
 
@@ -169,7 +179,7 @@ public:
 					} while(length > total_bytes_read);
 					recv(sock, byte, 2, 0);
 				} while(length != 0);
-			} else if(h.GetStatus() == 302){
+			} else if(h.GetStatus() == 302 || h.GetStatus() == 307){
 				close(sock);
 
 				sock = sock_connect(nslookup(GetHostFromLocation(h.GetValue("Location")).c_str()), 80);

@@ -7,22 +7,19 @@ CPP_SRCS += \
 ../Downloaded_File.cpp \
 ../HTML_PARSER.cpp \
 ../LinkMiner.cpp \
-../Main.cpp \
-../ZipOperations.cpp 
+../Main.cpp 
 
 OBJS += \
 ./Downloaded_File.o \
 ./HTML_PARSER.o \
 ./LinkMiner.o \
-./Main.o \
-./ZipOperations.o 
+./Main.o 
 
 CPP_DEPS += \
 ./Downloaded_File.d \
 ./HTML_PARSER.d \
 ./LinkMiner.d \
-./Main.d \
-./ZipOperations.d 
+./Main.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
